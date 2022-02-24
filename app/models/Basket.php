@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 require_once "../app/models/Products.php";
 require_once "../app/models/Product.php";
 
@@ -10,16 +13,16 @@ class Basket
     /** A kosár reprezentációja egy tömb, ami a következőképpen néz ki:
      * Ezt kell majd a session-ben tárolni, és az alábbi metódusokkal módosítgatni
 
-     [
-        "arvizturo" => [                // a tömbelem kulcsa a termékkód
-            "prod" => object(Product)   // az árvíztűrő termék objektumpéldánya
-            "pcs"  => 5                 // hány darab ilyen termék van a kosárban
-        ],
-        "reszelo" => [
-            "prod" => object(Product)
-            "pcs"  => 2
-        ]
-     ]
+    [
+    "arvizturo" => [                // a tömbelem kulcsa a termékkód
+    "prod" => object(Product)   // az árvíztűrő termék objektumpéldánya
+    "pcs"  => 5                 // hány darab ilyen termék van a kosárban
+    ],
+    "reszelo" => [
+    "prod" => object(Product)
+    "pcs"  => 2
+    ]
+    ]
 
      */
 
@@ -36,11 +39,16 @@ class Basket
         $this->content = $_SESSION["basket"];
 
 
+
+
     }
 
     public function save() {
 
+
         $_SESSION["basket"] =  $this->content;
+
+
     }
 
     public function empty() {
@@ -55,10 +63,53 @@ class Basket
             $this->content[$product->getId()] = [
                 "prod" => $product,
                 "pcs" => $pcs
-                ];
+            ];
         }
 
     }
+
+    public function setQuantity(Product $product, $pcs) {
+        // A termék objektum hozzáadása a kosárhoz $pcs darabszámban.
+        if(array_key_exists($product->getId(), $this->content)) {
+            $this->content[$product->getId()]["pcs"] = $pcs;
+        }
+
+        if($this->content[$product->getId()]["pcs"] < 1){
+            unset($this->content[$product->getId()]);
+        }
+
+    }
+
+
+
+    public function remove(Product $product) {
+        // A termék objektum hozzáadása a kosárhoz $pcs darabszámban.
+        if($this->content[$product->getId()]["pcs"]>1) {
+            $this->content[$product->getId()]["pcs"] -= 1;
+        }
+        else {
+           unset($this->content[$product->getId()]);
+        }
+
+
+    }
+
+
+
+
+
+    public function removeAll(Product $product) {
+        // A termék objektum hozzáadása a kosárhoz $pcs darabszámban.
+
+            unset($this->content[$product->getId()]);
+
+        /*unset($_SESSION['basket']);*/
+
+    }
+
+
+
+
 
     public function getContents() {
         // Kosár tartalmát leíró tömb visszaadása

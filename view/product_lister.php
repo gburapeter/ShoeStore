@@ -9,7 +9,7 @@ ob_start();
         <section id="product">
             <div class="album py-5 bg-gradient">
                 <div class="container">
-                    <h1 class="fw-light text-center">Termékeinkkk</h1>
+                    <h1 class="fw-dark text-center">Products </h1>
 
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center">
                         <?php print($__ALL_PRODUCTS); ?>

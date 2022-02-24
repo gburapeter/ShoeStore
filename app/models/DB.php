@@ -1,7 +1,6 @@
 <?php
 
 
-
 class DB {
     public PDO $conn;
     private static DB $instance;

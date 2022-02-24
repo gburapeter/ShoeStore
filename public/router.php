@@ -13,7 +13,7 @@ $URI_PARTS = array_slice($URI_PARTS, 3);
 
 // Create base URL for absolute references:
 define("USERNAME", explode('/', $_SERVER['SCRIPT_FILENAME'])[2]);  // path: /home/username/public/router.php
-const BASEURL   = "/webprog/" . USERNAME;                                   // result is /webprog/username
+const BASEURL = "/webprog/" . USERNAME;                                   // result is /webprog/username
 
 // Start session
 session_start();
@@ -23,11 +23,12 @@ if ($URI_PARTS[0] == "") {
     $controller = new FrontPageController($URI_PARTS);
     $controller->showFrontPage();
 
+
 } else if ($URI_PARTS[0] == "products") {
     // Termékek listázása
     $controller = new SimplePageController($URI_PARTS);
 
-    if(count($URI_PARTS) > 1) {
+    if (count($URI_PARTS) > 1) {
         // Midnen termék listázása
         $controller->showProduct($URI_PARTS[1]);
     } else {
@@ -50,7 +51,7 @@ if ($URI_PARTS[0] == "") {
     $controller = new SimplePageController($URI_PARTS);
     $controller->showTerms();
 
-}  else if ($URI_PARTS[0] == "unsubscribe") {
+} else if ($URI_PARTS[0] == "unsubscribe") {
     // Leiratkozás
     $controller = new NewsletterController($URI_PARTS);
     $controller->unsubscribe($_GET);
@@ -62,16 +63,28 @@ if ($URI_PARTS[0] == "") {
         // Megrendelés mentése
         $controller = new OrderController($URI_PARTS);
         $controller->saveOrder($_POST);
-    } else if($URI_PARTS[1] == "basket-add") {
+    } else if ($URI_PARTS[1] == "basket-add") {
         // Kosárba tevés
         $controller = new BasketController();
         $controller->add($_POST);
+    } else if ($URI_PARTS[1] == "basket-remove") {
+        // Kosárba tevés
+        $controller = new BasketController();
+        $controller->remove($_POST);
+    } else if ($URI_PARTS[1] == "basket-remove-all") {
+        // Kosárba tevés
+        $controller = new BasketController();
+        $controller->removeAll($_POST);
+    } else if ($URI_PARTS[1] == "set-quantity") {
+        // Kosárba tevés
+        $controller = new BasketController();
+        $controller->setQuantity($_POST);
     }
 } else if ($URI_PARTS[0] == "admin") {
 
     $controller = new AdminController($URI_PARTS);
 
-    if( array_key_exists('is_admin', $_SESSION) && $_SESSION['is_admin'] === true ) {
+    if (array_key_exists('is_admin', $_SESSION) && $_SESSION['is_admin'] === true) {
         $controller->showOrders();
 
     } else {

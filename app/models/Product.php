@@ -15,6 +15,7 @@ class Product
     private $lead;
     private $description;
 
+
     public function __construct($id, $name, $promo, $price, $stock, $lead, $description) {
         $this->id             = $id;
         $this->name           = $name;

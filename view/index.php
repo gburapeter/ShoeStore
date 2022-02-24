@@ -12,14 +12,9 @@ ob_start();
 
             <div class="p-5 mb-4 bg-light rounded-3">
                 <div class="container-fluid py-3">
-                    <h1 class="fw-light">Köszöntjük áruházunkban!</h1>
-                    <p class="col-md-12 fs-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper id
-                        mauris cursus sagittis. Vivamus ac metus eleifend, elementum ante id, maximus ipsum. Duis placerat
-                        ac velit pulvinar sollicitudin. Praesent et velit ut lacus pretium tempor commodo maximus sem. Fusce
-                        ac urna ligula. Morbi mattis lorem ipsum, at aliquet sapien aliquam eu. Sed tempor ligula non turpis
-                        scelerisque ultricies. Sed rhoncus accumsan mi, ac venenatis mi venenatis eget. Nam ut varius mi, et
-                        accumsan urna.
+                    <h1 class="fw-light" id="welcomemessage">Welcome to our shop!</h1>
+                    <p class="col-md-12 fs-4" id="welcomenike">
+                        Sport keeps us fit. Keeps you mindful. Brings us together. Through sport we have the power to change lives. Whether it is through stories of inspiring athletes. Helping you to get up and get moving. Sporting goods featuring the latest technologies, to up your performance. Beat your PB. Our sneakerstore offers a home to the runner, the basketball player, the soccer kid, the fitness enthusiast. The weekend hiker that loves to escape the city. The yoga teacher that spreads the moves. The 3-Stripes are seen in the music scene. On stage, at festivals. Our sports clothing keeps you focused before that whistle blows. During the race. And at the finish lines.
                     </p>
 
                 </div>
@@ -30,7 +25,7 @@ ob_start();
     <section>
         <div class="album py-5 bg-gradient bg-dark">
             <div class="container">
-                <h1 class="fw-light text-light text-center">Akciós termékeink</h1>
+                <h1 class="fw-light text-light text-center">On sale products</h1>
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center">
                     <?php print($__PRODUCTS_PROMO); ?>
@@ -42,7 +37,7 @@ ob_start();
     <section>
         <div class="album py-5 bg-gradient bg-body">
             <div class="container">
-                <h1 class="fw-light">További termékeink</h1>
+                <h1 class="fw-light">New Arrivals</h1>
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <?php print($__PRODUCTS_NORMAL); ?>

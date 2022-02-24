@@ -1,131 +1,162 @@
 // Kosárba tevés gomb
-$(document).on('click', '.basket-add', function() {
+/*$(document).on('click', '.basket-add', function() {*/
+$('.basket-add').on('click', function () {
+    console.log("clicked");
     $.ajax({
         type: "POST",
-        url: "/webprog/"+username+"/api/basket-add",
+        url: "/webprog/" + username + "/api/basket-add",
         data: {id: $(this).data("product")},
         dataType: "text",
-        success: function(response){
-            if(response === "OK") {
-                window.alert("A termék bekerült a kosárba!");
-            } else {
-                window.alert("Hiba történt a termék kosárba helyezése közben!");
+        success: function (response) {
+            if (response === "OK") {
+
+                window.alert("Product added to cart");
+
+
+            } else if (response === "OOS") {
+                window.alert("Your shopping cart would contain more amount than possible! Please choose a lower amount");
+                window.location = window.location
             }
         },
-        error: function(){
+        error: function () {
             window.alert("Hiba történt a termék kosárba helyezése közben!");
         }
     });
 });
 
-$(document).on('click', '.basket-add-count', function() {
+
+/*$(document).on('click', '.basket-add-count', function() {*/
+
+$('.basket-add-count').on('click', function () {
+
     $.ajax({
         type: "POST",
-        url: "/webprog/"+username+"/api/basket-add",
+        url: "/webprog/" + username + "/api/basket-add",
         data: {id: $(this).data("product"), pcs: $("#product-count").val()},
         dataType: "text",
-        success: function(response){
-            if(response === "OK") {
-                window.alert("A termék bekerült a kosárba!");
-            } else {
-                window.alert("Hiba történt a termék kosárba helyezése közben!");
+        success: function (response) {
+            if (response === "OK") {
+                window.alert("Product added to cart");
+
+
+            } else if (response === "OOS") {
+                window.alert("Your shopping cart would contain more amount than we have in stock! Please choose a lower amount");
+                window.location = window.location
             }
         },
-        error: function(){
+        error: function () {
             window.alert("Hiba történt a termék kosárba helyezése közben!");
         }
     });
 });
 
-// Megrendelés űrlap megye- és településválasztója
-$(document).ready(function() {
-    let county_filed = $("#county");
-    let town_field   = $("#town");
+function removeOne() {
+    console.log($(this).data("product"));
+    $.ajax({
+        type: "POST",
+        url: "/webprog/" + username + "/api/basket-remove",
+        data: {id: $(this).data("product")},
+        dataType: "text",
+        success: function (response, data) {
+            if (response === "OK") {
+                window.alert("One piece was removed");
+                window.location = window.location
 
-    if(county_filed) {
-        town_field.prop('disabled', 'disabled');
-        $.ajax({
-            type: "POST",
-            url: "/webprog/example/megye.php",
-            data: {
-                lista: "megye"
-            },
-            dataType: "json",
-            success: function (response) {
-                county_filed.html('');
-                county_filed.append('<option value="" disabled selected>Válasszon...</option>');
-                $.each(response, function (d, v) {
-                    county_filed.append('<option value="' + v + '">' + v + '</option>');
-                });
-                town_field.prop('disabled', 'disabled');
+
+            } else {
+                window.alert("nem okes 1");
             }
-        });
+        },
+        error: function () {
+            window.alert("nem okes 2 ");
+        }
+    });
+}
 
-        county_filed.change(function (e) {
-            $.ajax({
-                type: "POST",
-                url: "/webprog/example/megye.php",
-                data: {
-                    lista: "telepules",
-                    megye: $(this).val()
-                },
-                dataType: "json",
-                success: function (response) {
-                    town_field.html('');
-                    town_field.append('<option value="" disabled selected>Válasszon...</option>');
-                    $.each(response, function (d, v) {
-                        town_field.append('<option value="' + v + '">' + v + '</option>');
-                    });
-                    town_field.prop('disabled', false);
-                }
-            });
-        });
-    }
-});
+function removeAll() {
+    console.log($(this).data("product"));
+    $.ajax({
+        type: "POST",
+        url: "/webprog/" + username + "/api/basket-remove-all",
+        data: {id: $(this).data("product")},
+        dataType: "text",
+        success: function (response, data) {
+            if (response === "OK") {
+                window.alert("The product was totally removed");
+                window.location = window.location
+
+            } else {
+                window.alert("nem okes 1");
+            }
+        },
+        error: function () {
+            window.alert("nem okes 2 ");
+        }
+    });
+}
+
+/*
+$(document).on('click', '.remove-one', function() {
+    console.log($(this).data("product"));
+    $.ajax({
+        type: "POST",
+        url: "/webprog/"+username+"/api/basket-remove",
+        data: {id: $(this).data("product")},
+        dataType: "text",
+        success: function(response, data){
+            if(response === "OK") {
+                window.alert("OKOKOKOK");
+                window.location = window.location
 
 
-$("#order-form").submit(function(e) {
+            } else {
+                window.alert("nem okes 1");
+            }
+        },
+        error: function(){
+            window.alert("nem okes 2 ");
+        }
+    });
+});*/
 
-    e.preventDefault(); // avoid to execute the actual submit of the form.
 
-    var form = $(this);
-    var url = " /webprog/"+username+"/api/save-order";
+$(document).on('change', '.quantity-input', function (event) {
+    var productName = $(this).data("product");
+    var quantity = $(this).val();
+
 
     $.ajax({
         type: "POST",
-        url: url,
-        data: form.serialize(), // serializes the form's elements.
-        success: function(data) {
-            if(data.split("|")[0] === "OK") {
-                // message and redirect
-                window.alert("A megrendelés sikeres!");
-                window.location = "/webprog/"+username+"/track?order-id=" + data.split("|")[1]
-            } else if(data === "ERR") {
-                // message
-                window.alert("Hiba történt a megrendelés rögíztése közben!");
-            } else {
-                let json_data = JSON.parse(data);
-                $.each(json_data, function(k, v) {
-                    validationFeedback(k, v);
-                })
+        url: "/webprog/" + username + "/api/set-quantity",
+        data: {id: productName, pcs: quantity},
+        dataType: "text",
+        success: function (response, data) {
+            if (response === "OK") {
+                window.alert(`Quantity ${quantity} set for ${productName[0].toUpperCase() + productName.slice(1)}`);
+                window.location = window.location;
+
+            } else if (response === "OOS") {
+                window.alert("Your shopping cart would contain more amount than we have in stock! Please choose a lower amount");
+                window.location = window.location;
             }
+        },
+        error: function () {
+            window.alert("nem okes 2 ");
         }
     });
+
+
 });
 
-function validationFeedback(name, error) {
-    let form_field = $('[name="'+name+'"]');
+$(document).on('click', '.remove-one', removeOne);
 
-    // remove all decorations:
-    form_field.removeClass('is-invalid').removeClass('is-valid');
+/*
+$('.form-control').on('input', function() {
+    alert("value changed");
+});
+*/
 
-    // remove error tooltip text
-    form_field.parent().find(".invalid-feedback").remove();
 
-    if(!error) { // if OK
-        form_field.addClass('is-valid');
-    } else { // if not OK
-        form_field.addClass('is-invalid');
-        form_field.parent().append('<div class="invalid-feedback">'+error+'</div>');
-    }
-}
+$(document).on('click', '.remove-all', removeAll);
+
+

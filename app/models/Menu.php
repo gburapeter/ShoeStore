@@ -8,18 +8,18 @@ class Menu
 
     public function __construct($URI_PARTS = null) {
 
-        $db = DB::getInstance();
-        $stat = $db->conn->prepare("SELECT * FROM menu");
-        $stat->execute();
-        /*
-        $tmp = file_get_contents('../data/products.json');
-        $tmp = json_decode($tmp);
-        */
 
-        // foreach ($tmp as $item) {
-        while($item = $stat->fetch(PDO::FETCH_OBJ)){
+        $db = DB::getInstance();
+        $statement = $db->conn->prepare("SELECT * FROM menu");
+        $statement->execute();
+        /* $tmp = file_get_contents('../data/products.json');
+         $tmp = json_decode($tmp);*/
+
+        //foreach ($tmp as $item) {
+        while($item = $statement -> fetch(PDO::FETCH_OBJ)){
             $menu_item = new MenuItem($item->path, $item->caption, $URI_PARTS);
             $this->menu_items[] = $menu_item;
+
         }
 
     }

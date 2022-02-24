@@ -36,8 +36,64 @@ class BasketController
             exit("ERR");
         }
 
+        $myBasket = $this->basket->getContents();
+        $inBasketQty = $myBasket[$product->getId()]["pcs"];
+
+        if($product->getStock() < $pcs+$inBasketQty){
+            exit("OOS");
+        }
+
         // Itt már elvileg minden rendben van, meghívható a kosárba tevési függvény:
         $this->basket->add($product, $pcs);
+        $this->basket->save();
+        exit("OK");
+    }
+
+    public function remove($DATA){
+
+        $products = new Products();
+        $product = $products->getProductById($DATA["id"]);
+
+
+
+
+        $this->basket->remove($product);
+        $this->basket->save();
+        exit("OK");
+
+
+    }
+
+    public function removeAll($DATA){
+
+        $products = new Products();
+        $product = $products->getProductById($DATA["id"]);
+
+
+
+
+        $this->basket->removeAll($product);
+        $this->basket->save();
+        exit("OK");
+
+
+    }
+
+    public function setQuantity($DATA){
+        $products = new Products();
+        $product = $products->getProductById($DATA["id"]);
+        $pcs = $DATA["pcs"];
+
+       /* if($product->getStock() < $pcs){
+            exit("OOS");
+        }*/
+
+
+        if($product->getStock() < $pcs){
+            exit("OOS");
+        }
+
+        $this->basket->setQuantity($product, $pcs);
         $this->basket->save();
         exit("OK");
     }

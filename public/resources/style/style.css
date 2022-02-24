@@ -61,3 +61,94 @@ img.product-image {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.remove-one{
+   height: 73px;
+
+}
+
+.quantity-input{
+    width: 100px;
+}
+.form-select{
+    width:125px;
+}
+
+.image-texts{
+    margin-left: 30px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: blueviolet;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap');
+
+#welcomenike{
+    padding-top: 80px;
+
+}
+#welcomemessage {
+    position: absolute;
+    right:100px;
+    padding-bottom: 50px;
+    transform: translate(-50%, -50%);
+    display: block;
+    color: #4B84BC;
+    font-size: 50px;
+    letter-spacing: 8px;
+    cursor: pointer;
+}
+
+#welcomemessage::before {
+    content: "Welcome to our shop";
+    position: absolute;
+    color: black;
+    background-image: repeating-linear-gradient(
+            45deg,
+            transparent 0,
+            transparent 2px,
+            black 3px,
+            black 5px
+    );
+    -webkit-background-clip: text;
+    top: 0px;
+    left: 0;
+    z-index: -1;
+    transition: 1s;
+}
+
+#welcomemessage::after {
+    content: "Welcome to our shop";
+    position: absolute;
+    color: black;
+    background-image: repeating-linear-gradient(
+            45deg,
+            transparent 0,
+            transparent 2px,
+            black 3px,
+            black 5px
+    );
+    -webkit-background-clip: text;
+    top: 0px;
+    left: 0;
+    z-index: -1;
+    transition: 1s;
+}
+
+#welcomemessage:hover:before {
+    top: 10px;
+    left: 10px;
+}
+
+#welcomemessage:hover:after {
+    top: -10px;
+    left: -10px;
+}
+
+
+/**
+
+
+
+
+
+ */

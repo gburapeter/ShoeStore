@@ -4,3 +4,4 @@ $hostname = "localhost";
 $username = "ghipe1";
 $password = "GMJoShNP";
 $database = "webprog2021_ghipe1";
+?>
